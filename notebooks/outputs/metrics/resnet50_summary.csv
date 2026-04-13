@@ -1,0 +1,2 @@
+Model,Best Validation Accuracy,Final Train Accuracy,Final Validation Accuracy,Final Train Loss,Final Validation Loss,Test Accuracy
+ResNet50 (Fine-tuned),0.9608911780559382,0.9684818901882103,0.9599329220818111,0.08892914644792273,0.12332915952987511,0.9886363636363636

@@ -1,0 +1,2 @@
+Model,Best Validation Accuracy,Final Train Accuracy,Final Validation Accuracy,Final Train Loss,Final Validation Loss,Test Accuracy
+Custom CNN,0.9402886746122058,0.9426834563612679,0.9344193567706773,0.17038686730823574,0.2129647165658253,0.9369834710743802
