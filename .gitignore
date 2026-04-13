@@ -4,3 +4,5 @@ __pycache__/
 data/raw/
 outputs/checkpoints/
 .ipynb_checkpoints/
+notebooks/outputs/checkpoints/
+notebooks/outputs/figures/
