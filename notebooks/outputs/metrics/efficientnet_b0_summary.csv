@@ -1,0 +1,2 @@
+Model,Best Validation Accuracy,Final Train Accuracy,Final Validation Accuracy,Final Train Loss,Final Validation Loss,Test Accuracy
+EfficientNet-B0,0.8995627957118045,0.8845733451120728,0.8995627957118045,0.32667065846221577,0.2884110757985029,0.9225206611570248
