@@ -1,8 +1,19 @@
+# Virtual environment
 .venv_gpu311/
+
+# Python cache
 __pycache__/
 *.pyc
-data/raw/
-outputs/checkpoints/
+
+# Jupyter
 .ipynb_checkpoints/
+
+# Dataset
+data/raw/
+
+# Model checkpoints
+outputs/checkpoints/
 notebooks/outputs/checkpoints/
+
+# Optional: figures (if large)
 notebooks/outputs/figures/

@@ -2,59 +2,56 @@
 
 ## Overview
 
-This project implements deep learning models for classifying retinal OCT images into four categories:
+This project focuses on classifying retinal OCT images into four categories:
 
 * CNV
 * DME
 * DRUSEN
 * NORMAL
 
-Two approaches were explored:
+Three models were implemented and compared:
 
 * Custom CNN (baseline)
-* ResNet50 with transfer learning and fine-tuning
+* ResNet50 (fine-tuned)
+* EfficientNet-B0
 
 ---
 
 ## Dataset
 
-OCT2017 dataset was used.
-
-* Training data: split into 80% train / 20% validation
-* Test data: official test set (unseen)
+* OCT2017 retinal dataset
+* Proper **80/20 train–validation split**
+* **Official test set kept completely untouched**
 
 ---
 
-## Notebooks
-
-Run in this order:
+## Notebooks (Run in Order)
 
 1. `01_dataset_exploration.ipynb`
 2. `02_preprocessing_and_dataloaders.ipynb`
 3. `03_custom_cnn.ipynb`
 4. `04_resnet50.ipynb`
+5. `05_efficientnet.ipynb`
 
 ---
 
-## Models & Results
+## Results Summary
 
-### Custom CNN
-
-* Test Accuracy: **93.7%**
-* Limitation: Difficulty distinguishing DRUSEN from CNV
-
-### ResNet50 (Fine-tuned)
-
-* Test Accuracy: **98.86%**
-* Significant improvement in DRUSEN classification
+| Model                 | Test Accuracy |
+| --------------------- | ------------- |
+| Custom CNN            | ~93.7%        |
+| EfficientNet-B0       | ~92.2%        |
+| ResNet50 (Fine-tuned) | **~98.8%**    |
 
 ---
 
-## Key Findings
+## Key Observations
 
-* Transfer learning improves performance significantly
-* Fine-tuning is essential for medical datasets
-* ResNet50 reduces inter-class confusion
+* Transfer learning significantly improves performance
+* Fine-tuning is critical for medical image classification
+* ResNet50 performs best due to deeper feature representation
+* EfficientNet shows stable learning but lower performance
+* DRUSEN classification is the most challenging across models
 
 ---
 
@@ -84,7 +81,7 @@ pip install -r requirements.txt
 ## Notes
 
 * Dataset is not included in the repository
-* Model checkpoints are not included
+* Model checkpoints are excluded for size reasons
 
 ---
 
