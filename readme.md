@@ -16,16 +16,6 @@ Three models were implemented and compared:
 * Resnet50
 * MobileNetV2
 
-## Notebooks (Run in Order)
-
-1. `01_dataset_exploration.ipynb`
-2. `02_preprocessing_and_dataloaders.ipynb`
-3. `03_custom_cnn.ipynb`
-4. `04_resnet50.ipynb`
-5. `05_efficientnet.ipynb`
-
----
-
 ## Results Summary
 
 | Model                 | Test Accuracy |
