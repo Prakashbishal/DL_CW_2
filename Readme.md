@@ -10,7 +10,7 @@ This project focuses on **multi-class classification of retinal OCT images** usi
 
 ## Dataset
 
-* Source: Kaggle – *Retinal OCT Images (Optical Coherence Tomography)*
+* Source: Kaggle – *Retinal OCT Images (Optical Coherence Tomography)* : https://www.kaggle.com/datasets/paultimothymooney/kermany2018
 * Total samples: ~80,000 images
 * Classes:
 
