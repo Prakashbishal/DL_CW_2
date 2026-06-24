@@ -1,0 +1,137 @@
+Hi everyone,
+
+I've completed my part of the project and pushed everything to the GitHub repository on a separate branch: models/cnn-resnet-efficientnet
+
+─────────────────────────────────────────
+WHAT'S INCLUDED
+─────────────────────────────────────────
+Three fully working Jupyter notebooks:
+
+  01_Custom_CNN.ipynb
+    - Our baseline model built from scratch
+    - 4 convolutional blocks with BatchNorm + Dropout + L2 regularisation
+    - GlobalAveragePooling head (better generalisation than Flatten)
+
+  02_ResNet50.ipynb
+    - Transfer learning in two phases:
+      Phase 1 → Feature Extraction (base frozen, head trained)
+      Phase 2 → Fine-Tuning (top 30 layers unfrozen, LR = 1e-5)
+    - Red dashed line on training curves marks the fine-tune boundary
+
+  03_EfficientNetB0.ipynb
+    - Same two-phase strategy as ResNet50
+    - Compound scaling makes it more efficient than ResNet at similar accuracy
+    - Includes cross-model comparison table at the end (fill in your numbers)
+
+─────────────────────────────────────────
+HOW CHALLENGES WERE HANDLED IN THE CODE
+─────────────────────────────────────────
+
+Challenge 1 — Dataset Imbalance (CNV ~37k vs DRUSEN ~8k):
+  Fix → Weighted Cross-Entropy Loss using class_weight parameter in .fit()
+  The weights are auto-computed from your actual folder counts so they
+  always adapt to whichever dataset split you use.
+
+Challenge 2 — Noisy/Speckle Images:
+  Fix → Gaussian noise injection in the training augmentation pipeline
+  (preprocessing_function=add_gaussian_noise). This forces the model to
+  learn features that are robust to OCT speckle noise, not reliant on it.
+
+Challenge 3 — Overfitting:
+  Fix → Three layers of defence:
+    (a) Heavy data augmentation (rotation, shift, zoom, flip, brightness)
+    (b) Dropout (0.25 → 0.5 progressively through the network)
+    (c) L2 kernel regularisation on every Dense and Conv layer
+    (d) EarlyStopping + ReduceLROnPlateau callbacks
+
+Challenge 4 — Inter-Class Similarity (e.g. DME vs CNV fluid pockets):
+  Fix → Grad-CAM heatmaps in all three notebooks. These visualise exactly
+  which retinal region each model is focusing on, showing whether it's
+  learning clinically meaningful features or just background texture.
+
+─────────────────────────────────────────
+SETUP / HOW TO RUN
+─────────────────────────────────────────
+
+1. Place the Kermany 2018 dataset in the same folder as the notebooks:
+     ./OCT2017/train/  (CNV, DME, DRUSEN, NORMAL subfolders)
+     ./OCT2017/val/
+     ./OCT2017/test/
+
+2. Install dependencies:
+     pip install tensorflow scikit-learn matplotlib seaborn opencv-python pandas
+
+3. Run notebooks in order: 01 → 02 → 03
+   The last cell of notebook 03 has a comparison table — fill in your
+   results from all three runs and save it as model_comparison_table.csv
+
+─────────────────────────────────────────
+DATA SPLIT
+─────────────────────────────────────────
+The official Kermany test set has been kept completely untouched throughout
+all training. The 80/20 train-val split is handled by the dataset's
+pre-existing folder structure. If your local copy does not have a val/
+folder, merge train and val and add:
+
+  validation_split=0.2  in ImageDataGenerator
+  subset='training' / subset='validation' in flow_from_directory
+
+─────────────────────────────────────────
+EVALUATION METRICS — ALL THREE NOTEBOOKS
+─────────────────────────────────────────
+Every notebook produces the full set of metrics we agreed on:
+
+  ✓ Accuracy
+  ✓ Precision, Recall, F1-Score (Classification Report per class)
+  ✓ Confusion Matrix (heatmap saved as PNG)
+  ✓ Cohen's Kappa
+  ✓ AUC-ROC Curve (one curve per class, saved as PNG)
+  ✓ Grad-CAM heatmaps (saved as PNG)
+  ✓ Training/validation loss and accuracy curves
+
+─────────────────────────────────────────
+OUTPUTS SAVED AUTOMATICALLY
+─────────────────────────────────────────
+Each notebook saves the following files to the working directory:
+
+  Notebook 01:
+    best_cnn.keras
+    custom_cnn_final.keras
+    Custom_CNN_curves.png
+    Custom_CNN_confusion_matrix.png
+    Custom_CNN_roc.png
+    cnn_gradcam.png
+    cnn_sample_images.png
+
+  Notebook 02:
+    best_resnet_fe.keras
+    best_resnet_ft.keras
+    resnet50_finetuned_final.keras
+    ResNet50_training_curves.png
+    ResNet50_cm.png
+    ResNet50_roc.png
+    resnet50_gradcam.png
+
+  Notebook 03:
+    best_effnet_fe.keras
+    best_effnet_ft.keras
+    efficientnetb0_finetuned_final.keras
+    EfficientNetB0_curves.png
+    EfficientNetB0_cm.png
+    EfficientNetB0_roc.png
+    efficientnet_gradcam.png
+    model_comparison_table.csv
+
+─────────────────────────────────────────
+NEXT STEPS FOR THE GROUP
+─────────────────────────────────────────
+- Whoever is doing MobileNetV2 / VGG19 can reuse the same evaluate_model()
+  and display_gradcam() functions from these notebooks directly.
+
+- Once all 4 models are done, fill in the comparison table in notebook 03
+  (Section 11) and we can use it directly in our report/presentation.
+
+- The test set is untouched — do not evaluate on it until all models are
+  finalised to avoid any data leakage in our reported numbers.
+
+Please review the branch and let me know if anything needs adjusting.
